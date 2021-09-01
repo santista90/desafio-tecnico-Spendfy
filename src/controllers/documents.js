@@ -86,11 +86,9 @@ const getDocument = async (req, res) => {
     }
 }
 
-
-
-
 module.exports = {
     registerDocument,
     documentsList,
     deleteDocuments,
+    getDocument
 }
