@@ -47,6 +47,8 @@ const documentsList = async (req, res) => {
 const deleteDocuments = async (req, res) => {
     const { id } = req.params;
 
+    const dateNow = new Date().toLocaleDateString();
+
     try {
 
         const documentExist = await knex('documents').where({ id }).first();
@@ -55,10 +57,8 @@ const deleteDocuments = async (req, res) => {
             return res.status(400).json('Documento não encontrado');
         }
 
-        const deletedDocument = await knex('documents').where({ id }).del();
-
-        if(!deletedDocument) {
-            return res.status(400).json('Não foi possível excluir o documento.')
+        if(documentExist) {
+            const updateTable = await knex('documents').update({'deletedat': dateNow}).where({ id }); 
         }
 
         return res.status(200).json('Documento excluído com sucesso');
