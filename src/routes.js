@@ -7,6 +7,8 @@ const routes = express();
 routes.post('/documents', documents.registerDocument);
 // Listar Documentos
 routes.get('/documents', documents.documentsList);
+// Excluir Documento
+routes.delete('/documents/:id', documents.deleteDocuments);
 
 
 module.exports = routes;
