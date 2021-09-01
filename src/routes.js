@@ -5,6 +5,8 @@ const routes = express();
 
 // Cadastrar Documento
 routes.post('/documents', documents.registerDocument);
+// Listar Documentos
+routes.get('/documents', documents.documentsList);
 
 
 module.exports = routes;
