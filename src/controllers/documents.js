@@ -26,6 +26,21 @@ const registerDocument = async (req, res) => {
     }
 }
 
+const documentsList = async (req, res) => {
+    try {
+
+        const documentsList = await knex('documents');
+
+        return res.status(200).json(documentsList);
+
+    } catch (error) {
+        return res.status(400).json(error.message);
+    }
+}
+
+
+
 module.exports = {
     registerDocument,
+    documentsList,
 }
