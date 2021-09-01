@@ -9,6 +9,8 @@ routes.post('/documents', documents.registerDocument);
 routes.get('/documents', documents.documentsList);
 // Excluir Documento
 routes.delete('/documents/:id', documents.deleteDocuments);
+// Obter Documento
+routes.get('/documents/:id', documents.getDocument);
 
 
 module.exports = routes;
