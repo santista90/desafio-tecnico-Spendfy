@@ -1,7 +1,13 @@
 const knex = require('../config');
 
 const registerDocument = async (req, res) => {
-    const { kbsize, name, content } = req.body;
+    const { name, content } = req.body;
+
+    const buffer = content;
+    let buff = new Buffer.from('buffer');
+    let base64content = buff.toString('base64');
+
+    const kbSize = (content.length * 1024);
 
     const dateNow = new Date().toLocaleDateString();
 
@@ -13,7 +19,7 @@ const registerDocument = async (req, res) => {
             return res.status(400).json("Já existe um documento com este nome");
         }
 
-        const document = await knex('documents').insert({ kbsize, name, content, 'createdat': dateNow }).returning('*');
+        const document = await knex('documents').insert({ 'kbsize': kbSize, name, 'content': base64content, 'createdat': dateNow }).returning('*');
 
         if (document.length === 0) {
             return res.status(400).json("Não foi possível cadastrar o documento.");
@@ -61,6 +67,25 @@ const deleteDocuments = async (req, res) => {
         return res.status(400).json(error.message);
     }
 }
+
+const getDocument = async (req, res) => {
+    const { id } = req.params;
+
+    try {
+
+        const documentExist = await knex('documents').where({ id }).first();
+
+        if (!documentExist) {
+            return res.status(400).json("Documento não encontrado");
+        }
+
+        return res.status(200).json(documentExist);
+
+    } catch (error) {
+        return res.status(400).json(error.message);
+    }
+}
+
 
 
 
