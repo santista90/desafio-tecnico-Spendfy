@@ -38,9 +38,34 @@ const documentsList = async (req, res) => {
     }
 }
 
+const deleteDocuments = async (req, res) => {
+    const { id } = req.params;
+
+    try {
+
+        const documentExist = await knex('documents').where({ id }).first();
+
+        if (!documentExist) {
+            return res.status(400).json('Documento não encontrado');
+        }
+
+        const deletedDocument = await knex('documents').where({ id }).del();
+
+        if(!deletedDocument) {
+            return res.status(400).json('Não foi possível excluir o documento.')
+        }
+
+        return res.status(200).json('Documento excluído com sucesso');
+
+    } catch (error) {
+        return res.status(400).json(error.message);
+    }
+}
+
 
 
 module.exports = {
     registerDocument,
     documentsList,
+    deleteDocuments,
 }
