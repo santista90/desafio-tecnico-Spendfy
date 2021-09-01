@@ -1,5 +1,6 @@
 const express = require('express');
 const documents = require('./controllers/documents')
+const weekday = require('./controllers/weekday')
 
 const routes = express();
 
@@ -11,6 +12,11 @@ routes.get('/documents', documents.documentsList);
 routes.delete('/documents/:id', documents.deleteDocuments);
 // Obter Documento
 routes.get('/documents/:id', documents.getDocument);
+
+// Dia da Semana
+routes.get('/weekday-after', weekday.amountOfDays);
+
+
 
 
 module.exports = routes;
